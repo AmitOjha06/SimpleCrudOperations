@@ -49,7 +49,7 @@ public class HomeController {
      * This will add new user data into collection.
      *
      * @param userDetails
-     * @return String
+     * @return  Success Message
      */
     @PostMapping("/add")
     @ApiOperation(value = "Add user details")
@@ -61,7 +61,7 @@ public class HomeController {
      * This method will delete the data by id.
      *
      * @param id
-     * @return String
+     * @return Success message for delete data
      */
     @DeleteMapping("/delete")
     @ApiOperation(value = "Delete user details by id")
