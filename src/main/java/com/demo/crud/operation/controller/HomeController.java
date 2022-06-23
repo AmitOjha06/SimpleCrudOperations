@@ -5,6 +5,7 @@ import com.demo.crud.operation.beans.UserDetails;
 import com.demo.crud.operation.service.DataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class HomeController {
      */
     @GetMapping("/id")
     @ApiOperation(value = "Get user details by id")
-    public ResponseEntity<Response> getById(@RequestParam("Id") int id) {
+    public ResponseEntity<Response> getById(@ApiParam(name = "Id", defaultValue = "1") @RequestParam("Id") int id) {
         return new ResponseEntity<>(dataService.getById(id), HttpStatus.OK);
     }
 
@@ -64,7 +65,7 @@ public class HomeController {
      */
     @DeleteMapping("/delete")
     @ApiOperation(value = "Delete user details by id")
-    public ResponseEntity<Response> deleteDataById(@RequestParam("Id") int id) {
+    public ResponseEntity<Response> deleteDataById(@ApiParam(name = "Id") @RequestParam("Id") int id) {
         return new ResponseEntity<>(dataService.deleteById(id), HttpStatus.OK);
     }
 
@@ -77,7 +78,7 @@ public class HomeController {
      */
     @PutMapping("/update")
     @ApiOperation(value = "Update user details by id")
-    public ResponseEntity<Response> updateDataById(@RequestParam("Id") int id, @RequestBody UserDetails userDetails) {
+    public ResponseEntity<Response> updateDataById(@ApiParam(name = "Id") @RequestParam("Id") int id, @RequestBody UserDetails userDetails) {
         return new ResponseEntity<>(dataService.updateData(id, userDetails), HttpStatus.OK);
     }
 }
