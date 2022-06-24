@@ -39,8 +39,14 @@ public class DataServiceImpl implements DataService {
     @Override
     public Response getById(int id) {
         Response response = new Response();
-        UserDetails userDetails = userDetailsList.stream()
-                .filter(s -> s.getId() == id).findAny().get();
+        UserDetails userDetails = new UserDetails();
+        try {
+            userDetails = userDetailsList.stream()
+                    .filter(s -> s.getId() == id).findAny().get();
+        }
+        catch (Exception e){
+            return new Response(HttpStatus.BAD_REQUEST.value(),"Id does not exists",null);
+        }
         response.setStatusCode(HttpStatus.OK.value());
         response.setStatusMessage("Success");
         response.setResult(userDetails);
@@ -50,8 +56,14 @@ public class DataServiceImpl implements DataService {
     @Override
     public Response deleteById(int id) {
         Response response = new Response();
-        UserDetails userDetails = userDetailsList.stream()
-                .filter(s -> s.getId() == id).findAny().get();
+        UserDetails userDetails = new UserDetails();
+        try {
+            userDetails = userDetailsList.stream()
+                    .filter(s -> s.getId() == id).findAny().get();
+        }
+        catch (Exception e){
+            return new Response(HttpStatus.BAD_REQUEST.value(),"Id does not exists",null);
+        }
         userDetailsList.remove(userDetails);
         response.setStatusCode(HttpStatus.OK.value());
         response.setStatusMessage("Successfully Delete data at id "+id);
@@ -61,11 +73,13 @@ public class DataServiceImpl implements DataService {
     @Override
     public Response updateData(int id, UserDetails userDetails) {
         Response response = new Response();
-        UserDetails existingDetails = userDetailsList.stream()
-                .filter(s -> s.getId() == id).findAny().get();
-        if (existingDetails == null) {
-            response.setStatusCode(HttpStatus.NOT_FOUND.value());
-            response.setStatusMessage("Data not found at id " +id);
+        UserDetails existingDetails = new UserDetails();
+        try {
+            existingDetails = userDetailsList.stream()
+                    .filter(s -> s.getId() == id).findAny().get();
+        }
+        catch (Exception e){
+            return new Response(HttpStatus.BAD_REQUEST.value(),"Id does not exists",null);
         }
         existingDetails.setDesignation(userDetails.getDesignation());
         existingDetails.setSalary(userDetails.getSalary());
