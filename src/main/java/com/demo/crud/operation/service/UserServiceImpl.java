@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class DataServiceImpl implements DataService {
+public class UserServiceImpl implements UserService {
 
     List<UserDetails> userDetailsList = new ArrayList<>(Arrays.asList(
             new UserDetails(1, "Abhishek", "Sales Officer", 20014.20),

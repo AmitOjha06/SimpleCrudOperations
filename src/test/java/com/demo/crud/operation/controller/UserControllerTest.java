@@ -2,7 +2,7 @@ package com.demo.crud.operation.controller;
 
 import com.demo.crud.operation.beans.Response;
 import com.demo.crud.operation.beans.UserDetails;
-import com.demo.crud.operation.service.DataService;
+import com.demo.crud.operation.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -21,33 +21,33 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-class HomeControllerTest {
+class UserControllerTest {
     @MockBean
-    private DataService dataService;
+    private UserService userService;
 
     @Autowired
-    private HomeController homeController;
+    private UserController userController;
 
     @Test
     void testDeleteDataById() throws Exception {
         MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/demo-crud/delete");
         MockHttpServletRequestBuilder requestBuilder = deleteResult.param("Id", String.valueOf(1));
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(homeController).build().perform(requestBuilder);
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().is(200));
     }
 
     @Test
     void testGetAllUsersDetails() throws Exception {
-        when(dataService.getAllDetails()).thenReturn(new Response());
+        when(userService.getAllDetails()).thenReturn(new Response());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/demo-crud/all");
-        MockMvcBuilders.standaloneSetup(homeController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"statusCode\":0,\"statusMessage\":null}"));
+        MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"statusCode\":0,\"statusMessage\":null}"));
     }
 
     @Test
     void testGetById() throws Exception {
         MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/demo-crud/id");
         MockHttpServletRequestBuilder requestBuilder = getResult.param("Id", String.valueOf(1));
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(homeController).build().perform(requestBuilder);
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().is(200));
     }
 
@@ -58,10 +58,10 @@ class HomeControllerTest {
         userDetails.setId(1);
         userDetails.setName("Name");
         userDetails.setSalary(10.0d);
-        when(dataService.addUserData(userDetails)).thenReturn(new Response());
+        when(userService.addUserData(userDetails)).thenReturn(new Response());
         String content = (new ObjectMapper()).writeValueAsString(userDetails);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/demo-crud/add").contentType(MediaType.APPLICATION_JSON).content(content);
-        MockMvcBuilders.standaloneSetup(homeController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"statusCode\":0,\"statusMessage\":null}"));
+        MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"statusCode\":0,\"statusMessage\":null}"));
     }
 
     @Test
@@ -74,7 +74,7 @@ class HomeControllerTest {
         String content = (new ObjectMapper()).writeValueAsString(userDetails);
         MockHttpServletRequestBuilder putResult = MockMvcRequestBuilders.put("/demo-crud/update");
         MockHttpServletRequestBuilder requestBuilder = putResult.param("Id", String.valueOf(1)).contentType(MediaType.APPLICATION_JSON).content(content);
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(homeController).build().perform(requestBuilder);
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().is(200));
     }
 }

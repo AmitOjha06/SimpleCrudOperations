@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class DataServiceImplTest {
+class UserServiceImplTest {
     @Autowired
-    private DataServiceImpl dataServiceImpl;
+    private UserServiceImpl dataServiceImpl;
 
     @Test
     void testGetAllDetails() {

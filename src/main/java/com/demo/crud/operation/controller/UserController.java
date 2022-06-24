@@ -2,7 +2,7 @@ package com.demo.crud.operation.controller;
 
 import com.demo.crud.operation.beans.Response;
 import com.demo.crud.operation.beans.UserDetails;
-import com.demo.crud.operation.service.DataService;
+import com.demo.crud.operation.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
  * @author Amit Ojha
  */
 @RestController
-@RequestMapping("/demo-crud")
+@RequestMapping("/demo-crud/user")
 @Api(tags = "User-Controller", description = "User Controller")
-public class HomeController {
+public class UserController {
 
     @Autowired
-    private DataService dataService;
+    private UserService userService;
 
     /**
      * This will return as a list of all user data.
@@ -30,7 +30,7 @@ public class HomeController {
     @GetMapping("/all")
     @ApiOperation(value = "Get all user details")
     public ResponseEntity<Response> getAllUsersDetails() {
-        return new ResponseEntity<>(dataService.getAllDetails(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllDetails(), HttpStatus.OK);
     }
 
     /**
@@ -42,7 +42,7 @@ public class HomeController {
     @GetMapping("/id")
     @ApiOperation(value = "Get user details by id")
     public ResponseEntity<Response> getById(@ApiParam(name = "Id", defaultValue = "1") @RequestParam("Id") int id) {
-        return new ResponseEntity<>(dataService.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }
 
     /**
@@ -54,7 +54,7 @@ public class HomeController {
     @PostMapping("/add")
     @ApiOperation(value = "Add user details")
     public ResponseEntity<Response> saveUserData(@RequestBody UserDetails userDetails) {
-        return new ResponseEntity<>(dataService.addUserData(userDetails), HttpStatus.OK);
+        return new ResponseEntity<>(userService.addUserData(userDetails), HttpStatus.OK);
     }
 
     /**
@@ -63,10 +63,10 @@ public class HomeController {
      * @param id
      * @return Success message for delete data
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/id")
     @ApiOperation(value = "Delete user details by id")
     public ResponseEntity<Response> deleteDataById(@ApiParam(name = "Id") @RequestParam("Id") int id) {
-        return new ResponseEntity<>(dataService.deleteById(id), HttpStatus.OK);
+        return new ResponseEntity<>(userService.deleteById(id), HttpStatus.OK);
     }
 
     /**
@@ -76,9 +76,9 @@ public class HomeController {
      * @param userDetails
      * @return UserDetails
      */
-    @PutMapping("/update")
+    @PutMapping("/update/id")
     @ApiOperation(value = "Update user details by id")
     public ResponseEntity<Response> updateDataById(@ApiParam(name = "Id") @RequestParam("Id") int id, @RequestBody UserDetails userDetails) {
-        return new ResponseEntity<>(dataService.updateData(id, userDetails), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateData(id, userDetails), HttpStatus.OK);
     }
 }
